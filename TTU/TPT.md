@@ -33,8 +33,9 @@ GRANT ALL ON irs TO tpt_user WITH GRANT OPTION;
 
 ### TPT(Teradata Parallel Transporter) 개요
 
-- TPT는 빠르게 대용량의 Flat file, CSV와 같은 파일들을 Teradata로 import(Load)하거나 Teradata의 테이블을 파일로 export(Unload)하는데 주로 적용됨.
+- TPT는 빠르게 대용량의 Flat file, CSV와 같은 파일들을 Teradata로 import(Load)하거나 Teradata의 테이블을 파일로 export(Unload)하거나 DB to DB 이관용도로 주로 적용됨.
 - TPT는 기존 FastLoad등의 utility들을 통합되어 사용할 수 있게 재 개발 됨.
+- TPT는 Script 기반 및 Library 형태의 API로 사용할 수 있음.
 - TPT는 ETL Tool이 가지는 다양한 기능적인 특성 담고 있으며, 이 때문에 별도의 ETL Tool과도 유연하게 통합이 가능
 - load(import), export외에 ddl 생성, upsert(update/insert), delete, stream 데이터의 upsert등 다양한 기능을 지원하며 이들은 모두 Operator로 제공됨.
 - TPT는 많은 기능을 가지고 있으며 또한 개별 기능에 대한 상세한 조절이 가능함. 그리고 이를 수행하기 위해 SQL과 유사한 Script 를 통해서 내부 프로세스를 기술하고 관리함. 하지만 이 때문에 많은량의 TPT 스크립트를 작성해야 하는 단점이 있음.
@@ -187,7 +188,7 @@ DESCRIPTION 'Load a Teradata table from a file'
 	SCHEMA *
 	ATTRIBUTES
 	(
-	  INTEGER BUFFERSIZE      = 16,
+	  INTEGER BUFFERSIZE      = 1024,
 	  VARCHAR TargetTable     = 'irs.irs_returns',   /*Define target table name */
 	  VARCHAR TdpId           = '127.0.0.1',  /*System Name*/
 	  VARCHAR UserName        = 'tpt_user',     /*Username*/
@@ -351,7 +352,7 @@ DEFINE OPERATOR LOAD_CSV    /*Load information*/
 	SCHEMA *
 	ATTRIBUTES
 	(
-	  INTEGER BUFFERSIZE      = 16,
+	  INTEGER BUFFERSIZE      = 1024,
 	  VARCHAR TargetTable     = 'irs.irs_returns',   /*Define target table name */
 	  VARCHAR TdpId           = '127.0.0.1',  /*System Name*/
 	  VARCHAR UserName        = 'tpt_user',     /*Username*/
@@ -505,7 +506,7 @@ DESCRIPTION 'Load a Teradata table from a file'
 	SCHEMA *
 	ATTRIBUTES
 	(
-	  INTEGER BUFFERSIZE      = 16,
+	  INTEGER BUFFERSIZE      = 1024,
 	  VARCHAR TargetTable     = 'irs.irs_returns',   /*Define target table name */
 	  VARCHAR TdpId           = '127.0.0.1',  /*System Name*/
 	  VARCHAR UserName        = 'tpt_user',     /*Username*/
@@ -761,7 +762,7 @@ DESCRIPTION 'Load a Teradata table from a file'
 	SCHEMA *
 	ATTRIBUTES
 	(
-	  INTEGER BUFFERSIZE      =16,
+	  INTEGER BUFFERSIZE      = 1024,
 	  VARCHAR TargetTable     = @LoadTargetTable,   /*Define target table name*/
 	  VARCHAR TdpId           = @TdpId,  /*System Name*/
 	  VARCHAR UserName        = @UserName,     /*Username*/
